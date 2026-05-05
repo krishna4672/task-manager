@@ -13,6 +13,14 @@ A full-stack MERN application for managing team projects and tasks with role-bas
 
 ---
 
+## Demo Credentials
+
+| Role  | Email          | Password   |
+| ----- | -------------- | ---------- |
+| Admin | k@gmail.com    | k1234567   |
+
+---
+
 ## Tech Stack
 
 | Layer     | Technology                                    |

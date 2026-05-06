@@ -203,38 +203,46 @@ npm run dev
 
 ---
 
-## Deployment on Railway
+## Deployment
 
-### Backend Deployment
+### Backend Deployment (Render)
 
-1. Create a new project on [Railway](https://railway.app)
-2. Add a **MongoDB** service (or use MongoDB Atlas and paste the URI)
-3. Add a new service → **Deploy from GitHub repo** → select the `backend/` root directory
-4. Set **environment variables** in Railway dashboard:
+1. Create a new account / log in at [Render](https://render.com)
+2. Click **New +** → **Web Service**
+3. Connect your **GitHub repository**
+4. Configure the service:
+   - **Name:** `team-task-manager-api` (or your choice)
+   - **Root Directory:** `backend`
+   - **Runtime:** Node
+   - **Build Command:** `npm install`
+   - **Start Command:** `npm start`
+5. Set **environment variables** in the Render dashboard:
    ```
    PORT=5000
    MONGO_URI=<your_mongodb_atlas_uri>
    JWT_SECRET=<your_production_secret>
    NODE_ENV=production
-   CLIENT_URL=<your_frontend_railway_url>
+   CLIENT_URL=<your_frontend_url>
    ```
-5. Set the **Start Command** to: `npm start`
-6. Set the **Root Directory** to: `backend`
-7. Deploy — Railway will run `npm install` and then `npm start`
+6. Click **Create Web Service** — Render will build and deploy automatically
+7. Note your backend URL (e.g. `https://your-service.onrender.com`)
+
+> **Note:** Render's free tier spins down after inactivity. The first request after idle may take ~30-50 seconds.
 
 ### Frontend Deployment
 
-1. Add another service in the same Railway project → **Deploy from GitHub repo**
-2. Set the **Root Directory** to: `frontend`
-3. Set **environment variables**:
-   ```
-   VITE_API_URL=<your_backend_railway_url>/api
-   ```
-4. Set the **Build Command** to: `npm install && npm run build`
-5. Set the **Start Command** to: `npx serve dist -s -l 3000`
-6. Deploy
+Deploy the frontend on any static hosting provider (Vercel, Netlify, Render Static Site, etc.):
 
-### Alternative: Single Service Deployment
+1. Connect your GitHub repository and set the **Root Directory** to `frontend`
+2. Set the **Build Command** to: `npm install && npm run build`
+3. Set the **Publish/Output Directory** to: `dist`
+4. Set **environment variables**:
+   ```
+   VITE_API_URL=<your_render_backend_url>/api
+   ```
+5. Deploy
+
+### Alternative: Single Service Deployment (Render)
 
 In production mode, the backend automatically serves the frontend build:
 
@@ -242,7 +250,7 @@ In production mode, the backend automatically serves the frontend build:
    ```bash
    cd frontend && npm run build
    ```
-2. Deploy only the full repo with `backend/` as root directory
+2. Deploy only the full repo on Render with `backend/` as the root directory
 3. The `server.js` will serve `frontend/dist/` for all non-API routes when `NODE_ENV=production`
 
 ---
